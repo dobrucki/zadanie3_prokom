@@ -1,4 +1,4 @@
-package pl.sudoku.sudokuboard;
+package pl.sudoku.board;
 
 public class SudokuBoard {
 
