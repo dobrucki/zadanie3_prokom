@@ -1,73 +1,90 @@
 package pl.sudoku.board;
 
+/**
+ * This class represents sudoku game board.
+ */
 public class SudokuBoard {
+    /**
+     * Size of the board.
+     */
+    private final int size = 9;
+    /**
+     * Size of the square.
+     */
+    private final int squareSize = 3;
+    /**
+     * This array represents sudoku board, contains all the numbers.
+     */
+    private final int[] board = new int[size * size];
 
-    private final int[] board = new int[81];
-//    private final int[] board = {
-//            2, 3, 9, 7, 1, 8, 5, 6, 4,
-//            4, 1, 5, 2, 6, 9, 7, 3, 8,
-//            7, 8, 6, 5, 3, 4, 1, 2, 9,
-//            6, 9, 1, 8, 4, 3, 2, 7, 5,
-//            8, 5, 7, 1, 2, 6, 9, 4, 3,
-//            3, 2, 4, 9, 5, 7, 8, 1, 6,
-//            9, 7, 3, 6, 8, 2, 4, 5, 1,
-//            5, 6, 2, 4, 9, 1, 3, 8, 7,
-//            1, 4, 8, 3, 7, 5, 6, 9, 2
-//    };
-
-
-    public int get(int x, int y){
-        return board[y * 9 + x];
+    /**
+     * @param x x coordinate in the board
+     * @param y y coordinate in the board
+     * @return value of that field
+     */
+    public final int get(final int x, final int y) {
+        return board[y * size + x];
     }
 
-    public void set(int x, int y, int num){
-        board[y * 9 + x] = num;
+    /**
+     * @param x x coordinate in the board
+     * @param y y coordinate in the board
+     * @param num number that will be set in that field
+     */
+    public final void set(final int x, final int y, final int num) {
+        board[y * size + x] = num;
     }
 
-    public boolean checkBoard(){
+    /**
+     * @return true if the board is correctly solved
+     */
+    public final boolean checkBoard() {
 
-        for(int i = 0; i < 9; i++){
+        for (int i = 0; i < size; i++) {
             int result1 = 0;
             int result2 = 0;
             int result3 = 0;
 
             // rows and columns check
-            for(int j = 0; j < 9; j++){
-                result1 |= 1 << (board[i * 9 + j] - 1);
-                result2 |= 1 << (board[j * 9 + i] - 1);
+            for (int j = 0; j < size; j++) {
+                result1 |= 1 << (board[i * size + j] - 1);
+                result2 |= 1 << (board[j * size + i] - 1);
             }
 
-            if(result1 != 511 || result2 != 511) return false;
-
+            if (result1 != (1 << size) - 1 || result2 != (1 << size) - 1) {
+                return false;
+            }
 
             // 3x3 squares check
-            for(int j = 0; j < 3; j++)
-                for(int k = 0; k < 3; k++)
-                    result3 |= 1 << (board[(j + i / 27 * 3)* 9 + k + (i / 3) * 3] - 1);
+            for (int j = 0; j < squareSize; j++) {
+                for (int k = 0; k < squareSize; k++) {
+                    result3 |= 1
+                            << (board[(j + i / size * size)
+                            * size + k + (i / squareSize) * squareSize] - 1);
+                }
+            }
 
-            if(result3 != 511) return false;
-
+            if (result3 != (1 << size) - 1) {
+                return false;
+            }
         }
-
         return true;
     }
 
-    public String toString(){
+    /**
+     * @return String representation of the sudoku board
+     */
+    public final String toString() {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i <  81; i++){
+        for (int i = 0; i <  size << 1; i++) {
             sb.append(board[i]);
-            if (i % 9 == 8) sb.append("\n");
-            else sb.append(", ");
+            if (i % size == size - 1) {
+                sb.append("\n");
+            } else {
+                sb.append(", ");
+            }
         }
         return sb.toString();
-    }
-
-    public static void main(String[] args){
-        SudokuBoard sb = new SudokuBoard();
-//        System.out.println(sb);
-//        sb.set(1, 2, 9);
-        System.out.println(sb);
-        System.out.println(sb.checkBoard());
     }
 }
 
