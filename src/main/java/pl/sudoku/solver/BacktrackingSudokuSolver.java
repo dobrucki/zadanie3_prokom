@@ -2,26 +2,29 @@ package pl.sudoku.solver;
 
 import pl.sudoku.board.SudokuBoard;
 
-import java.util.Random;
+import java.util.*;
 
 public class BacktrackingSudokuSolver implements SudokuSolver {
 
     private final Random rnd = new Random();
 
+    private final Integer[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
     public void solve(SudokuBoard board) {
         clearBoard(board);
-        board.set(0, 0, rnd.nextInt(9) + 1);
+//        board.set(0, 0, rnd.nextInt(9) + 1);
         solveR(board);
     }
 
 
-    public boolean solveR(SudokuBoard board){
+    private boolean solveR(SudokuBoard board){
         for(int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (board.get(i, j) != 0) continue;
-                for (int num = 1; num <= 9; num++){
-                    if (isPossible(board, i, j, num)){
-                        board.set(i, j, num);
+                ArrayList al = randomCollection();
+                for (int num = 0; num < 9; num++){
+                    if (isPossible(board, i, j, (Integer)al.get(num))){
+                        board.set(i, j, (Integer)al.get(num));
                         if (solveR(board)) return true;
                         else board.set(i, j, 0);
                     }
@@ -48,6 +51,11 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
         return true;
     }
 
+    private ArrayList<Integer> randomCollection(){
+        ArrayList<Integer> al = new ArrayList<>(Arrays.asList(numbers));
+        Collections.shuffle(al);
+        return al;
+    }
 
     public static void main(String[] args){
         SudokuBoard sb = new SudokuBoard();
@@ -56,5 +64,7 @@ public class BacktrackingSudokuSolver implements SudokuSolver {
         System.out.println(sb);
         ss.solve(sb);
         System.out.println(sb);
+        System.out.println(sb.checkBoard());
+
     }
 }
