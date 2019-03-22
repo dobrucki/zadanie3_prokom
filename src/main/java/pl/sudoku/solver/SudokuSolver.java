@@ -10,7 +10,8 @@ import pl.sudoku.board.SudokuBoard;
 public interface SudokuSolver {
 
     /**
-     * @param board The Sudoku board object reference
+     * { @summary This method solves given SudokuBoard.
+     * @param board The Sudoku board object reference }
      */
     void solve(SudokuBoard board);
 }

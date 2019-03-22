@@ -18,6 +18,7 @@ public class SudokuBoard {
     private final int[] board = new int[size * size];
 
     /**
+     * { @summary This method returns number standing in the given field. }
      * @param x x coordinate in the board
      * @param y y coordinate in the board
      * @return value of that field
@@ -27,6 +28,7 @@ public class SudokuBoard {
     }
 
     /**
+     * { @summary This method sets number in the given field. }
      * @param x x coordinate in the board
      * @param y y coordinate in the board
      * @param num number that will be set in that field
@@ -36,6 +38,7 @@ public class SudokuBoard {
     }
 
     /**
+     * { @summary This method checks if board is correctly solved. }
      * @return true if the board is correctly solved
      */
     public final boolean checkBoard() {
@@ -72,6 +75,7 @@ public class SudokuBoard {
     }
 
     /**
+     * { @summary This method return String representation of sudoku board. }
      * @return String representation of the sudoku board
      */
     public final String toString() {
