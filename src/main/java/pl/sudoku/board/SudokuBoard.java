@@ -8,10 +8,12 @@ public class SudokuBoard {
      * Size of the board.
      */
     private final int size = 9;
+
     /**
      * Size of the square.
      */
     private final int squareSize = 3;
+
     /**
      * This array represents sudoku board, contains all the numbers.
      */
